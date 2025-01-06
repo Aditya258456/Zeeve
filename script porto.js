@@ -17,3 +17,33 @@ window.onbeforeunload = () => {
         form.reset();
     }
 }; 
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-button');
+    const portfolioItems = document.querySelectorAll('.portfolio');
+
+    // Filter function
+    function filterPortfolio(category) {
+        portfolioItems.forEach(item => {
+            const itemCategory = item.dataset.category;
+            if (category === 'all' || category === itemCategory) {
+                item.classList.remove('hide');
+            } else {
+                item.classList.add('hide');
+            }
+        });
+    }
+
+    // Add click event to filter buttons
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+            // Filter items
+            const category = button.dataset.filter;
+            filterPortfolio(category);
+        });
+    });
+});
